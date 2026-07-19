@@ -21,26 +21,22 @@ const long interval = 2000;
 bool isPaused = false;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(115200);
   pinMode(0, INPUT_PULLUP);
-  
   delay(1000);
-  
   led.init();
   sensor.init();
   display.init();
-  
   delay(250);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   checkPauseButton();
   
   if (isPaused) {
     led.setBlink(2000, 4000);
-    return;
+    display.updateRunningText("[INFO]:", false, 225); 
+    return; 
   }
   
   unsigned long currentMillis = millis();
@@ -59,7 +55,6 @@ void processSensorCycle() {
   delay(100);
   
   bool isSuccess = sensor.readData(temp, humid);
-  
   if (isSuccess) {
     Serial.printf("[INF] Temperature: %.1f C | Humidity: %.1f %%\n", temp, humid);
   } else {
@@ -78,10 +73,12 @@ void checkPauseButton() {
       
       if (isPaused) {
         Serial.println("[SYS] Program is paused");
-        display.setDisplay("System Paused", "BOOT to continue");
+        display.setRunningText("Program is paused. Hold BOOT to continue...");
       } else {
         Serial.println("[SYS] Program is resumed...");
-        display.setDisplay("System Resumed", "Processing...");
+        display.setDisplay("System Resumed", "Processing");
+        display.showLoading(1, 10, 4, 750);
+        delay(1500);
       }
       
       while (digitalRead(0) == LOW) {

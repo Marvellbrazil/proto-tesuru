@@ -1,7 +1,8 @@
 #include "SensorManager.h"
 
-SensorManager::SensorManager(uint8_t dhtPin, uint8_t dhtType)
-    : _dht(dhtPin, dhtType) {}
+SensorManager::SensorManager(uint8_t dhtPin, uint8_t dhtType):
+    _dht(dhtPin, dhtType)
+{}
 
 void SensorManager::init() {
     _dht.begin();

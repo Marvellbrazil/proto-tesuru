@@ -6,6 +6,8 @@
 class LEDManager {
     private:
         uint8_t _ledPin;
+        unsigned long _previousLedMillis;
+        bool _ledState;
 
     public:
         LEDManager(uint8_t ledPin);
