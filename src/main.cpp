@@ -23,6 +23,7 @@ const String SSID = WIFI_SSID;
 const String PASS = WIFI_PASS;
 const String LAPTOPIP = LAPTOP_IP;
 const uint16_t UDP_PORT = 5005;
+const unsigned long WIFI_RETRY_INTERVAL = 10000;
 
 IPAddress laptopIPAddr;
 
@@ -58,7 +59,8 @@ void setup() {
 
 void loop() {
   checkPauseButton();
-  
+  wifiStreamer.maintain(WIFI_RETRY_INTERVAL);
+
   if (isPaused) {
     led.setBlink(2000, 4000);
     display.updateRunningText("[INFO]:", false, 225); 
