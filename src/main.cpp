@@ -7,7 +7,7 @@
 #if __has_include("../.env")
     #include "../.env"
 #else
-    #error "File .env tidak ditemukan! Silakan buat file .env di root project."
+    #error "Cannot found .env, please copy the example and adjust its value"
 #endif
 
 void checkPauseButton();
